@@ -1,3 +1,6 @@
-<div *ngfor="let user of users">
-    <app-user-card [users]="user" class="app-user-card"></app-user-card>
-  </div>
+<button mat-raised-button (click)="openDialog()">Добавить пользователя</button>
+
+<div *NgFor="let users of users">
+  <app-user-card [users]="users" class="app-user-card"></app-user-card>
+  <button (click)="deleteUser(users)" class="delete-User">Удалить</button>
+</div>
