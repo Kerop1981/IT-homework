@@ -1,10 +1,9 @@
 import { Component,OnInit } from '@angular/core';
-import { UsersApiService } from '../users-api.service';
+import { UsersApiService } from '../services/users-api.service';
 import { UserCardComponent } from "../user-card/user-card.component";
 import { MatDialog } from '@angular/material/dialog';
 import { User } from '../models/User';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef } from '@angular/core';
 @Component({
     selector: 'app-users-list',
     standalone: true,
@@ -20,7 +19,7 @@ export class UsersListComponent implements OnInit {
 
   constructor(
     private UsersApiService:UsersApiService,
-    private dialog:MatDialog){}
+    private dialog:MatDialog,){}
   
   ngOnInit():void{
       this.getUsers();

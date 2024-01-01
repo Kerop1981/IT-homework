@@ -1,6 +1,6 @@
 import { Component, Input,} from '@angular/core';
 import { User } from '../models/User';
-import { UsersApiService } from '../users-api.service';
+import { UsersApiService } from '../services/users-api.service';
 
 @Component({
   selector: 'app-user-card',

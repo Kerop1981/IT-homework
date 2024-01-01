@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
-import { UsersApiService } from '../users-api.service';
+import { UsersApiService } from '../services/users-api.service';
 
 
 @Component({
