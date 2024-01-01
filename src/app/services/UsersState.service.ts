@@ -7,10 +7,10 @@ import { UsersApiService } from './users-api.service';
 @Injectable({
   providedIn: 'root'
 })
-export class LocalStorageService {
+export class UsersStateService {
   
-  private todosStateSubject = new BehaviorSubject<User[]>([]);
-  public todos$: Observable<User[]> = this.todosStateSubject.asObservable();
+  private usersStateSubject = new BehaviorSubject<User[]>([]);
+  public users$: Observable<User[]> = this.usersStateSubject.asObservable();
 
   constructor(
     private UsersApiService : UsersApiService
@@ -19,7 +19,7 @@ export class LocalStorageService {
   }
 
   get local(): User[] {
-    return this.todosStateSubject.getValue();
+    return this.usersStateSubject.getValue();
   }
 
   read() {
@@ -27,7 +27,7 @@ export class LocalStorageService {
       .subscribe(
         {
           next: (res) => {
-            this.todosStateSubject.next(res);
+            this.usersStateSubject.next(res);
           },
           error: (error) => {
             console.error('Error', error)
@@ -43,7 +43,7 @@ export class LocalStorageService {
         next: (res) => {
           console.log('todoService.deleteTodo', res);
           const newTodos = this.local.filter(todo => todo.id !== id);
-          this.todosStateSubject.next(newTodos);
+          this.usersStateSubject.next(newTodos);
         },
         error: (err) => console.error('Error', err)
       })
@@ -61,7 +61,7 @@ export class LocalStorageService {
               return item;
             }
           });
-          this.todosStateSubject.next(updatedTodos);
+          this.usersStateSubject.next(updatedTodos);
         }),
         error: err => console.error('Update error', err)
       })
