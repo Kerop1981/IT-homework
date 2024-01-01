@@ -6,6 +6,8 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
+import { UsersApiService } from '../users-api.service';
+
 
 @Component({
   selector: 'app-dialog',
@@ -19,7 +21,8 @@ export class DialogComponent {
 
   newUser: User = {id: 0, name:'',email: '', phone: ''}
 
- constructor(public dialogRef:MatDialogRef<DialogComponent>){}
+ constructor(public dialogRef:MatDialogRef<DialogComponent>,
+  private UsersApiService:UsersApiService){}
 
  onCancelClick(): void {
   this.dialogRef.close();
@@ -27,5 +30,9 @@ export class DialogComponent {
 
 onCreateClick():void{
   this.dialogRef.close(this.newUser.name);
+}
+
+updateUser(updatedUser: User): void {
+  this.UsersApiService.getUsers();
 }
 }
