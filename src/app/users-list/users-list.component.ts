@@ -1,9 +1,12 @@
 import { Component,OnInit } from '@angular/core';
 import { UsersApiService } from '../services/users-api.service';
 import { UserCardComponent } from "../user-card/user-card.component";
-import { MatDialog } from '@angular/material/dialog';
 import { User } from '../models/User';
 import { CommonModule } from '@angular/common';
+import { UsersStateService } from '../services/UsersState.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
+
 @Component({
     selector: 'app-users-list',
     standalone: true,
@@ -18,15 +21,17 @@ export class UsersListComponent implements OnInit {
  users: any[];
 
   constructor(
+    private dialog: MatDialog,
     private UsersApiService:UsersApiService,
-    private dialog:MatDialog,){}
+    private UsersStateService :UsersStateService){}
   
   ngOnInit():void{
       this.getUsers();
   }
   
   getUsers() {
-    this.UsersApiService.getUsers().subscribe((data: any[]) => {
+    this.UsersStateService.users$
+      .subscribe((data) => {
       this.users = data;
     });
   }
@@ -35,16 +40,17 @@ export class UsersListComponent implements OnInit {
     this.users = this.users.filter(users => users !== users);
   }
 
-  openDialog(): void {
-    const dialogRef = this.UsersApiService.openDialog();
-
-    dialogRef.afterClosed().subscribe((result: User | string) => {
-      if (result && typeof result === 'object' && !Array.isArray(result)) {
-        result.id = this.users.length + 1;
-        this.users.push(result);
-    
-        
-      }
-    });
+  openDialog() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+       width: '300px',
+     });
+     dialogRef.afterClosed().subscribe((result: User | string) => {
+       if (result && typeof result === 'object' && !Array.isArray(result)) {
+         result.id = this.users.length + 1;
+         this.users.push(result);
+     
+         
+       }
+     });
+   }
   }
-}

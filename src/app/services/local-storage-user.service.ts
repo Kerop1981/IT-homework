@@ -6,16 +6,16 @@ import { Injectable } from '@angular/core';
 export class LocalStorageUserService {
   
   getItem(): string | null {
-    return localStorage.getItem('userToken') || null;
+    return localStorage.getItem('user') || null;
   }
 
   setItem(data: string): string {
-    localStorage.setItem('userToken', data);
+    localStorage.setItem('user', data);
     return data;
   }
 
   removeItem(): boolean {
-    localStorage.removeItem('userToken');
+    localStorage.removeItem('user');
     return true;
   }
 }
