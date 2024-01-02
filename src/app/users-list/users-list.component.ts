@@ -23,13 +23,15 @@ export class UsersListComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private UsersApiService:UsersApiService,
-    private UsersStateService :UsersStateService){}
+    private UsersStateService :UsersStateService
+    ){console.log('UserStateService')}
   
   ngOnInit():void{
       this.getUsers();
   }
   
   getUsers() {
+    console.log('getUsers')
     this.UsersStateService.users$
       .subscribe((data) => {
       this.users = data;

@@ -5,6 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class LocalStorageUserService {
   
+  constructor(){
+    console.log(LocalStorageUserService)
+  }
   getItem(): string | null {
     return localStorage.getItem('user') || null;
   }

@@ -27,6 +27,7 @@ export class UsersStateService {
   }
 
   read() {
+    console.log('read')
     const storedData = localStorage.getItem('users');
 
     if (storedData) {
