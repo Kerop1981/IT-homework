@@ -10,10 +10,10 @@ import { UsersApiService } from '../services/users-api.service';
   styleUrl: './user-card.component.scss'
 })
 export class UserCardComponent{
-  @Input() users:User;
+  @Input() user:User;
 
   constructor(private UsersApiService:UsersApiService){
-    this.users = { id: 1, name: '', email: '' ,phone:''}; 
+    this.user = { id: 1, name: '', email: '' ,phone:''}; 
   }
 
 }

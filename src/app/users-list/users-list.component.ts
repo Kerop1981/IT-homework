@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { UsersStateService } from '../services/UsersState.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
-
+import { LocalStorageUserService } from '../services/local-storage-user.service';
 @Component({
     selector: 'app-users-list',
     standalone: true,
@@ -18,28 +18,38 @@ import { DialogComponent } from '../dialog/dialog.component';
 
 export class UsersListComponent implements OnInit {
 
- users: any[];
+ users: User[];
 
   constructor(
+    private LocalStorageUserService:LocalStorageUserService,
     private dialog: MatDialog,
     private UsersApiService:UsersApiService,
     private UsersStateService :UsersStateService
-    ){console.log('UserStateService')}
+    ){}
   
   ngOnInit():void{
       this.getUsers();
   }
   
   getUsers() {
-    console.log('getUsers')
     this.UsersStateService.users$
       .subscribe((data) => {
       this.users = data;
     });
+
+    const data: User[] = this.LocalStorageUserService.getItem();
+    if (data) {
+      this.users = data;
+    } else {
+      this.UsersStateService.users$.subscribe((data : User[]) => this.users = data)
+    }
   }
+     
+
 
   deleteUser(users: number): void {
     this.users = this.users.filter(users => users !== users);
+    this.LocalStorageUserService.setItem('user',this.users)
   }
 
   openDialog() {
@@ -50,7 +60,7 @@ export class UsersListComponent implements OnInit {
        if (result && typeof result === 'object' && !Array.isArray(result)) {
          result.id = this.users.length + 1;
          this.users.push(result);
-     
+        
          
        }
      });

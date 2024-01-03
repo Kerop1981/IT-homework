@@ -8,10 +8,7 @@ import { UsersApiService } from './users-api.service';
   providedIn: 'root'
 })
 export class UsersStateService {
-  openDialog() {
-    throw new Error('Method not implemented.');
-  }
-  
+ 
   private usersStateSubject = new BehaviorSubject<User[]>([]);
   public users$: Observable<User[]> = this.usersStateSubject.asObservable();
 
@@ -27,11 +24,10 @@ export class UsersStateService {
   }
 
   read() {
-    console.log('read')
-    const storedData = localStorage.getItem('users');
+    const storedData = this.localStorageUserService.getItem();
 
     if (storedData) {
-      this.usersStateSubject.next(JSON.parse(storedData));
+      this.usersStateSubject.next((storedData));
     } else {
       this.UsersApiService.getUsers()
         .subscribe(
@@ -47,19 +43,30 @@ export class UsersStateService {
         );
     }
   }
+
+
+deleteTodo(id: number) {
+  const currentUsers = this.usersStateSubject.value;
+  const updatedUsers = currentUsers.filter(user => user.id !== id);
+  this.usersStateSubject.next(updatedUsers);
+  this.UsersApiService.getItem();
 }
 
-//   deleteTodo(id: number) {
-    
-//   }
+updateTodo(updatedUser: User) {
+  const currentUsers = this.usersStateSubject.value;
+  const updatedUsers = currentUsers.map(user => (user.id === updatedUser.id ? { ...user, ...updatedUser } : user));
+  this.usersStateSubject.next(updatedUsers);
+  this.UsersApiService.getItem();
+}
 
-//   updateTodo(user:User) {
+createTodo(newUser: User) {
+  const currentUsers = this.usersStateSubject.value;
+  const updatedUsers = [...currentUsers, newUser];
+  this.usersStateSubject.next(updatedUsers);
+  this.UsersApiService.getItem();
+}
 
-//   }
+}
 
-//   createTodo(Users:User) {
 
-//   }
-
-// }
 

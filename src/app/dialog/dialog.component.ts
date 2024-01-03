@@ -18,7 +18,6 @@ import { UsersApiService } from '../services/users-api.service';
   providers:[{ provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } }]
 })
 export class DialogComponent {
-
   newUser: User = {id: 0, name:'',email: '', phone: ''}
 
  constructor(public dialogRef:MatDialogRef<DialogComponent>,
@@ -26,13 +25,13 @@ export class DialogComponent {
 
  onCancelClick(): void {
   this.dialogRef.close();
-}
+  }
 
-onCreateClick():void{
+ onCreateClick():void{
   this.dialogRef.close(this.newUser.name);
-}
+  }
 
-updateUser(updatedUser: User): void {
+ updateUser(updatedUser: User): void {
   this.UsersApiService.getUsers();
-}
+  }
 }

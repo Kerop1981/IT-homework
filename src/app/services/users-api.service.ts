@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { LocalStorageUserService } from './local-storage-user.service';
+import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,8 @@ export class UsersApiService {
    private url = 'https://jsonplaceholder.typicode.com/users'
   
   constructor(private http:HttpClient,
-    private dialog: MatDialog){}
+    private dialog: MatDialog,
+    private LocalStorageUserService:LocalStorageUserService){}
 
     getUsers():Observable<any[]> {
     const url = this.url;
@@ -26,17 +29,16 @@ export class UsersApiService {
     });
   }
 
-  getItem(): string | null {
-    return localStorage.getItem('users') || null;
+  getItem(): User[]| null {
+    return this.LocalStorageUserService.getItem();
   }
 
-  setItem(data: string): string {
-    localStorage.setItem('users', data);
-    return data;
+  setItem(data: User[]): void {
+    this.LocalStorageUserService.setItem ('user',data);
   }
 
   removeItem(): boolean {
-    localStorage.removeItem('users');
+    this.LocalStorageUserService.removeItem();
     return true;
   }
 }
