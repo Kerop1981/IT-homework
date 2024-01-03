@@ -1,7 +1,7 @@
 <button mat-raised-button (click)="openDialog()">Добавить пользователя</button>
 <div *ngIf="users">
 <div *ngFor="let users of users">
-  <app-user-card [users]="users" class="app-user-card"></app-user-card>
+  <app-user-card [user]="users" class="app-user-card"></app-user-card>
   <button (click)="deleteUser(users)" class="delete-User">Удалить</button>
 </div>
 </div>

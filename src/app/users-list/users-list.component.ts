@@ -47,7 +47,7 @@ export class UsersListComponent implements OnInit {
      
 
 
-  deleteUser(users: number): void {
+  deleteUser(users: object): void {
     this.users = this.users.filter(users => users !== users);
     this.LocalStorageUserService.setItem('user',this.users)
   }
