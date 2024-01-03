@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { LocalStorageUserService } from './local-storage-user.service';
 import { User } from '../models/User';
@@ -13,7 +12,7 @@ import { User } from '../models/User';
 export class UsersApiService {
 
    private url = 'https://jsonplaceholder.typicode.com/users'
-  
+
   constructor(private http:HttpClient,
     private dialog: MatDialog,
     private LocalStorageUserService:LocalStorageUserService){}
@@ -22,13 +21,6 @@ export class UsersApiService {
     const url = this.url;
     return this.http.get<any[]>(this.url)
   }
-
-  openDialog() {
-    return this.dialog.open(DialogComponent, {
-      width: '300px',
-    });
-  }
-
   getItem(): User[]| null {
     return this.LocalStorageUserService.getItem();
   }

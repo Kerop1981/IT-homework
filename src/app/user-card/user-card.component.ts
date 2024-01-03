@@ -1,4 +1,4 @@
-import { Component, Input,} from '@angular/core';
+import { Component, Input,Output,EventEmitter } from '@angular/core';
 import { User } from '../models/User';
 import { UsersApiService } from '../services/users-api.service';
 
@@ -9,12 +9,20 @@ import { UsersApiService } from '../services/users-api.service';
   templateUrl: './user-card.component.html',
   styleUrl: './user-card.component.scss'
 })
+
 export class UserCardComponent{
+
   @Input() user:User;
-
+  @Output() delete: EventEmitter<User> = new EventEmitter<User>();
+  @Output() edit: EventEmitter<User> = new EventEmitter<User>();
   constructor(private UsersApiService:UsersApiService){
-    this.user = { id: 1, name: '', email: '' ,phone:''}; 
+    this.user = { id: 1, name: '', email: '' ,phone:''};
   }
-
+  deleteUser() {
+    this.delete.emit(this.user);
+  }
+  editUser() {
+    this.edit.emit(this.user);
+  }
 }
 
