@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { LocalStorageUserService } from './local-storage-user.service';
 import { User } from '../models/User';
@@ -21,6 +22,7 @@ export class UsersApiService {
     const url = this.url;
     return this.http.get<any[]>(this.url)
   }
+
   getItem(): User[]| null {
     return this.LocalStorageUserService.getItem();
   }
