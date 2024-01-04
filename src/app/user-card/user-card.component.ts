@@ -9,10 +9,12 @@ import { UsersApiService } from '../services/users-api.service';
   templateUrl: './user-card.component.html',
   styleUrl: './user-card.component.scss'
 })
+
 export class UserCardComponent{
   @Input() user:User;
   @Output() delete: EventEmitter<User> = new EventEmitter<User>();
   @Output() edit: EventEmitter<User> = new EventEmitter<User>();
+
   constructor(private UsersApiService:UsersApiService){
     this.user = { id: 1, name: '', email: '' ,phone:''};
   }

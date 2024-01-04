@@ -7,12 +7,12 @@ import { User } from '../models/user';
 @Injectable({
   providedIn: 'root'
 })
-
 export class UsersApiService {
   private url = 'https://jsonplaceholder.typicode.com/users'
   constructor(
     private http:HttpClient,
     private localStorageUserService:LocalStorageUserService){}
+
   getUsers():Observable<any[]> {
     return this.http.get<any[]>(this.url)
   }

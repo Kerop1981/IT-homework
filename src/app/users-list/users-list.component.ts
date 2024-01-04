@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { LocalStorageUserService } from '../services/local-storage-user.service';
 import {MatButtonModule} from "@angular/material/button";
+
 @Component({
   selector: 'app-users-list',
   standalone: true,
@@ -16,7 +17,7 @@ import {MatButtonModule} from "@angular/material/button";
   imports: [UserCardComponent, CommonModule, MatButtonModule,],
   providers:[UsersApiService,UsersStateService]})
 
-export class UsersListComponent implements OnInit {
+export class UsersListComponent implements OnInit{
   user: User[];
 
   constructor(
@@ -54,6 +55,7 @@ export class UsersListComponent implements OnInit {
       this.LocalStorageUserService.setItem('user', this.user)
     }
   }
+
   openDialog() {
     const dialogRef = this.dialog.open(DialogComponent, {width: '300px',});
     dialogRef.afterClosed().subscribe((result: User | string) => {
@@ -64,16 +66,17 @@ export class UsersListComponent implements OnInit {
       }
     });
   }
+
   editUser(userEdit: User) {
     const dialogRef = this.dialog.open(DialogComponent, {width: '300px', data: {user: userEdit, isEdit: true}});
-    dialogRef.afterClosed().subscribe((result: User | string) => {
-      if (result && typeof result === 'object' && !Array.isArray(result)) {
-        const index = this.user.findIndex(user => user.id === userEdit.id);
-        if (index !== -1) {
-          this.user[index] = result;
-          this.LocalStorageUserService.setItem('user', this.user)
+      dialogRef.afterClosed().subscribe((result: User | string) => {
+        if (result && typeof result === 'object' && !Array.isArray(result)) {
+          const index = this.user.findIndex(user => user.id === userEdit.id);
+          if (index !== -1) {
+            this.user[index] = result;
+            this.LocalStorageUserService.setItem('user', this.user)
+          }
         }
-      }
     });
   }
 }

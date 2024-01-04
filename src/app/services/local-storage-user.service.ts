@@ -8,9 +8,11 @@ export class LocalStorageUserService {
     if(data) {return JSON.parse(data)}
     else{return null}
   }
+
   setItem( key:string ,data: object): void {
     localStorage.setItem(key, JSON.stringify(data));
   }
+
   removeItem(): boolean {
     localStorage.removeItem('user');
     return true;
