@@ -11,21 +11,17 @@ export class UsersStateService {
 
   private usersStateSubject = new BehaviorSubject<User[]>([]);
   public users$: Observable<User[]> = this.usersStateSubject.asObservable();
-
   constructor(
     private localStorageUserService:LocalStorageUserService,
     private UsersApiService : UsersApiService
-  ) {
+  ){
     this.read();
   }
-
   get local(): User[] {
     return this.usersStateSubject.getValue();
   }
-
   read() {
     const storedData = this.localStorageUserService.getItem();
-
     if (storedData) {
       this.usersStateSubject.next((storedData));
     } else {
