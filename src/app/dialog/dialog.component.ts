@@ -8,8 +8,6 @@ import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatButtonModule} from "@angular/material/button";
-
-
 @Component({
   selector: 'app-dialog',
   standalone: true,
@@ -21,7 +19,7 @@ import {MatButtonModule} from "@angular/material/button";
 export class DialogComponent {
   newUser: User = {id: 0, name:'',email: '', phone: ''}
 
- constructor(public dialogRef:MatDialogRef<DialogComponent>){}
+  constructor(public dialogRef:MatDialogRef<DialogComponent>){}
 
  onCancelClick(): void {
   this.dialogRef.close();

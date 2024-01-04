@@ -1,15 +1,13 @@
-//users-list.component
 import { Component,OnInit } from '@angular/core';
 import { UsersApiService } from '../services/users-api.service';
 import { UserCardComponent } from "../user-card/user-card.component";
 import { User } from '../models/user';
 import { CommonModule } from '@angular/common';
-import { UsersStateService } from '../services/UsersState.service';
+import { UsersStateService } from '../services/usersState.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { LocalStorageUserService } from '../services/local-storage-user.service';
 import {MatButtonModule} from "@angular/material/button";
-
 @Component({
   selector: 'app-users-list',
   standalone: true,
@@ -56,7 +54,6 @@ export class UsersListComponent implements OnInit {
       this.LocalStorageUserService.setItem('user', this.user)
     }
   }
-
   openDialog() {
     const dialogRef = this.dialog.open(DialogComponent, {width: '300px',});
     dialogRef.afterClosed().subscribe((result: User | string) => {
@@ -67,7 +64,6 @@ export class UsersListComponent implements OnInit {
       }
     });
   }
-
   editUser(userEdit: User) {
     const dialogRef = this.dialog.open(DialogComponent, {width: '300px', data: {user: userEdit, isEdit: true}});
     dialogRef.afterClosed().subscribe((result: User | string) => {
