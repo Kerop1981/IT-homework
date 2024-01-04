@@ -1,8 +1,8 @@
-// users-list.component.ts
+//users-list.component
 import { Component,OnInit } from '@angular/core';
 import { UsersApiService } from '../services/users-api.service';
 import { UserCardComponent } from "../user-card/user-card.component";
-import { User } from '../models/User';
+import { User } from '../models/user';
 import { CommonModule } from '@angular/common';
 import { UsersStateService } from '../services/UsersState.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,7 +15,7 @@ import {MatButtonModule} from "@angular/material/button";
     standalone: true,
     templateUrl: './users-list.component.html',
     styleUrl: './users-list.component.scss',
-  imports: [UserCardComponent, CommonModule, MatButtonModule,],
+    imports: [UserCardComponent, CommonModule, MatButtonModule,],
     providers:[UsersApiService,UsersStateService]
 })
 
@@ -25,6 +25,7 @@ export class UsersListComponent implements OnInit {
   constructor(
     private LocalStorageUserService:LocalStorageUserService,
     private dialog: MatDialog,
+    private UsersApiService:UsersApiService,
     private UsersStateService :UsersStateService
     ){}
   ngOnInit():void{
@@ -49,10 +50,7 @@ export class UsersListComponent implements OnInit {
     }
   }
   deleteUser(UserDelete: User): void {
-    this.user = this.user.filter(user => user !== UserDelete);
-
     const index = this.user.findIndex(user => user === UserDelete);
-
     if (index !== -1) {
       this.user.splice(index, 1);
       this.LocalStorageUserService.setItem('user', this.user)
@@ -62,7 +60,6 @@ export class UsersListComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogComponent, {
        width: '300px',
      });
-
      dialogRef.afterClosed().subscribe((result: User | string) => {
        if (result && typeof result === 'object' && !Array.isArray(result)) {
          result.id = this.user.length + 1;
@@ -76,7 +73,6 @@ export class UsersListComponent implements OnInit {
       width: '300px',
       data: { user:userEdit,isEdit: true },
     });
-
     dialogRef.afterClosed().subscribe((result: User | string) => {
       if (result && typeof result === 'object' && !Array.isArray(result)) {
         const index = this.user.findIndex(user => user.id === userEdit.id);

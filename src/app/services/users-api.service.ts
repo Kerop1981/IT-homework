@@ -1,40 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DialogComponent } from '../dialog/dialog.component';
-import { MatDialog } from '@angular/material/dialog';
 import { LocalStorageUserService } from './local-storage-user.service';
-import { User } from '../models/User';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class UsersApiService {
-
-   private url = 'https://jsonplaceholder.typicode.com/users'
-
+  private url = 'https://jsonplaceholder.typicode.com/users'
   constructor(private http:HttpClient,
-    private dialog: MatDialog,
-    private LocalStorageUserService:LocalStorageUserService){}
+              private LocalStorageUserService:LocalStorageUserService){}
 
-    getUsers():Observable<any[]> {
-    const url = this.url;
+  getUsers():Observable<any[]> {
     return this.http.get<any[]>(this.url)
   }
-
   getItem(): User[]| null {
     return this.LocalStorageUserService.getItem();
   }
-
-  setItem(data: User[]): void {
-    this.LocalStorageUserService.setItem ('user',data);
-  }
-
   removeItem(): boolean {
     this.LocalStorageUserService.removeItem();
     return true;
   }
 }
-
 

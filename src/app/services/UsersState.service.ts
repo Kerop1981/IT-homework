@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from "rxjs";
 import { LocalStorageUserService } from './local-storage-user.service';
-import { User } from '../models/User';
+import { User } from '../models/user';
 import { UsersApiService } from './users-api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersStateService {
- 
+
   private usersStateSubject = new BehaviorSubject<User[]>([]);
   public users$: Observable<User[]> = this.usersStateSubject.asObservable();
 
