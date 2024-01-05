@@ -2,7 +2,11 @@
 <div *ngIf="user">
   <div *ngFor="let currentUser of user">
     <app-user-card [user]="currentUser" class="app-user-card"></app-user-card>
-    <button (click)="editUser(currentUser)" class="edit-User">Редактировать</button>
-    <button (click)="deleteUser(currentUser)" class="delete-User">Удалить</button>
+    <button (click)="editUser(currentUser)" class="edit-User">
+      Редактировать
+    </button>
+    <button (click)="deleteUser(currentUser)" class="delete-User">
+      Удалить
+    </button>
   </div>
 </div>

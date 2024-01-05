@@ -5,27 +5,26 @@ import { LocalStorageUserService } from './local-storage-user.service';
 import { User } from '../models/user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsersApiService {
-  private url = 'https://jsonplaceholder.typicode.com/users'
+  private url = 'https://jsonplaceholder.typicode.com/users';
 
   constructor(
     private http: HttpClient,
-    private localStorageUserService: LocalStorageUserService){
-  }
+    private localStorageUserService: LocalStorageUserService,
+  ) {}
 
   getUsers(): Observable<any[]> {
     return this.http.get<any[]>(this.url);
   }
 
-  getItem(): User[]| null {
+  getItem(): User[] | null {
     return this.localStorageUserService.getItem();
   }
 
   removeItem(): boolean {
     this.localStorageUserService.removeItem();
-    return true
+    return true;
   }
 }
-
