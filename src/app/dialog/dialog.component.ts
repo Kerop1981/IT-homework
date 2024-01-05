@@ -18,15 +18,15 @@ import {MatButtonModule} from "@angular/material/button";
   providers:[{ provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } }]
 })
 export class DialogComponent {
-newUser: User = {id: 0, name:'',email: '', phone: ''}
+  newUser: User = {id: 0, name:'',email: '', phone: ''}
 
-constructor(public dialogRef:MatDialogRef<DialogComponent>){}
+  constructor(public dialogRef:MatDialogRef<DialogComponent>){}
 
-onCancelClick(): void {
-this.dialogRef.close();
-}
+  onCancelClick(): void {
+  this.dialogRef.close();
+  }
 
-onCreateClick(): void {
-this.dialogRef.close(this.newUser);
-}
+  onCreateClick(): void {
+  this.dialogRef.close(this.newUser);
+  }
 }
