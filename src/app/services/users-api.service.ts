@@ -9,19 +9,23 @@ import { User } from '../models/user';
 })
 export class UsersApiService {
   private url = 'https://jsonplaceholder.typicode.com/users'
+
   constructor(
     private http:HttpClient,
-    private localStorageUserService:LocalStorageUserService){}
+    private localStorageUserService:LocalStorageUserService){
+
+  }
 
   getUsers():Observable<any[]> {
-    return this.http.get<any[]>(this.url)
+    return this.http.get<any[]>(this.url);
   }
+
   getItem(): User[]| null {
     return this.localStorageUserService.getItem();
   }
+
   removeItem(): boolean {
     this.localStorageUserService.removeItem();
-    return true;
-  }
+    return true}
 }
 

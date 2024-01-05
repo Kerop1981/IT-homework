@@ -15,7 +15,10 @@ export class UsersStateService {
 constructor(
   private localStorageUserService:LocalStorageUserService,
   private UsersApiService : UsersApiService
-) {this.read()}
+) {
+  this.read();
+}
+
 get local(): User[] {return this.usersStateSubject.getValue()}
 
 read() {
@@ -44,6 +47,7 @@ updateTodo(updatedUser: User) {
     this.usersStateSubject.next(updatedUsers);
     this.UsersApiService.getItem();
 }
+
 createTodo(newUser: User) {
     const currentUsers = this.usersStateSubject.value;
     const updatedUsers = [...currentUsers, newUser];

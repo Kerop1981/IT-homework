@@ -1,4 +1,4 @@
-//dialog.component.ts
+
 import { Component } from '@angular/core';
 import {DialogModule} from '@angular/cdk/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -26,7 +26,7 @@ onCancelClick(): void {
   this.dialogRef.close();
 }
 
-onCreateClick():void{
+onCreateClick(): void {
   this.dialogRef.close(this.newUser);
   }
 }

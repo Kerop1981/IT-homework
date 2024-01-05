@@ -16,13 +16,15 @@ export class UserCardComponent{
   @Output() edit: EventEmitter<User> = new EventEmitter<User>();
 
   constructor(private UsersApiService:UsersApiService){
-    this.user = { id: 1, name: '', email: '' ,phone:''};
+    this.user = { id: 1, name: '', email: '' ,phone:''}
   }
+
   deleteUser() {
-    this.delete.emit(this.user);
+    this.delete.emit(this.user)
   }
+
   editUser() {
-    this.edit.emit(this.user);
+    this.edit.emit(this.user)
   }
 }
 

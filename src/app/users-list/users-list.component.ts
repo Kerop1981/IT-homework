@@ -15,7 +15,8 @@ import {MatButtonModule} from "@angular/material/button";
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.scss',
   imports: [UserCardComponent, CommonModule, MatButtonModule,],
-  providers:[UsersApiService,UsersStateService]})
+  providers:[UsersApiService,UsersStateService]
+})
 
 export class UsersListComponent implements OnInit{
   user: User[];
@@ -64,8 +65,8 @@ export class UsersListComponent implements OnInit{
         this.user.push(result);
         this.LocalStorageUserService.setItem('user', this.user)
       }
-    });
-  }
+    }
+    )}
 
   editUser(userEdit: User) {
     const dialogRef = this.dialog.open(DialogComponent, {width: '300px', data: {user: userEdit, isEdit: true}});
