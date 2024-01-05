@@ -11,12 +11,11 @@ export class UsersApiService {
   private url = 'https://jsonplaceholder.typicode.com/users'
 
   constructor(
-    private http:HttpClient,
-    private localStorageUserService:LocalStorageUserService){
-
+    private http: HttpClient,
+    private localStorageUserService: LocalStorageUserService){
   }
 
-  getUsers():Observable<any[]> {
+  getUsers(): Observable<any[]> {
     return this.http.get<any[]>(this.url);
   }
 
@@ -26,6 +25,7 @@ export class UsersApiService {
 
   removeItem(): boolean {
     this.localStorageUserService.removeItem();
-    return true}
+    return true
+  }
 }
 

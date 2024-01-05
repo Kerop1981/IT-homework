@@ -3,7 +3,7 @@ import { UsersApiService } from '../services/users-api.service';
 import { UserCardComponent } from "../user-card/user-card.component";
 import { User } from '../models/user';
 import { CommonModule } from '@angular/common';
-import { UsersStateService } from '../services/usersState.service';
+import { UsersStateService } from '../services/users-state.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { LocalStorageUserService } from '../services/local-storage-user.service';
@@ -17,7 +17,6 @@ import {MatButtonModule} from "@angular/material/button";
   imports: [UserCardComponent, CommonModule, MatButtonModule,],
   providers:[UsersApiService,UsersStateService]
 })
-
 export class UsersListComponent implements OnInit{
   user: User[];
 
@@ -65,8 +64,8 @@ export class UsersListComponent implements OnInit{
         this.user.push(result);
         this.LocalStorageUserService.setItem('user', this.user)
       }
-    }
-    )}
+    })
+  }
 
   editUser(userEdit: User) {
     const dialogRef = this.dialog.open(DialogComponent, {width: '300px', data: {user: userEdit, isEdit: true}});
