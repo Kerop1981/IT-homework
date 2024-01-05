@@ -23,10 +23,10 @@ newUser: User = {id: 0, name:'',email: '', phone: ''}
 constructor(public dialogRef:MatDialogRef<DialogComponent>){}
 
 onCancelClick(): void {
-  this.dialogRef.close();
+this.dialogRef.close();
 }
 
 onCreateClick(): void {
-  this.dialogRef.close(this.newUser);
+this.dialogRef.close(this.newUser);
 }
 }
