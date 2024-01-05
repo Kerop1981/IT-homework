@@ -7,15 +7,14 @@ import { UsersApiService } from './users-api.service';
 @Injectable({
   providedIn: 'root'
 })
-
 export class UsersStateService {
   private usersStateSubject = new BehaviorSubject<User[]>([]);
   public users$: Observable<User[]> = this.usersStateSubject.asObservable();
 
   constructor(
-    private localStorageUserService:LocalStorageUserService,
-    private UsersApiService : UsersApiService
-    ) {
+  private localStorageUserService:LocalStorageUserService,
+  private UsersApiService : UsersApiService
+  ){
     this.read();
   }
 
@@ -34,7 +33,7 @@ export class UsersStateService {
         },
         error: (error) => {
           console.error('Error', error)}
-      });
+        });
     }
   }
 
