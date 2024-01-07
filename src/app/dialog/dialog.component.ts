@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DialogModule } from '@angular/cdk/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
-import { User } from '../models/user';
+import { User} from "../models/User";
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
