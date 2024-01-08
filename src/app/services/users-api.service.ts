@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LocalStorageUserService } from './local-storage-user.service';
 import { User } from '../models/User';
 
 @Injectable({
@@ -12,19 +11,13 @@ export class UsersApiService {
 
   constructor(
     private http: HttpClient,
-    private localStorageUserService: LocalStorageUserService,
   ) {}
 
-  getUsers(): Observable<any[]> {
-    return this.http.get<any[]>(this.url);
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.url);
   }
 
-  getItem(): User[] | null {
-    return this.localStorageUserService.getItem();
-  }
-
-  removeItem(): boolean {
-    this.localStorageUserService.removeItem();
-    return true;
+  createUser(user:User):Observable<User> {
+    return this.http.post<User>(this.url, user)
   }
 }

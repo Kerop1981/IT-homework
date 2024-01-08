@@ -1,14 +1,12 @@
 <div class="card">
-  <div class="card-container" *ngFor="let currentUser of user">
+  <div class="card-container">
     <p>ID: {{ user.id }}</p>
     <p>Name: {{ user.name }}</p>
     <p>Email: {{ user.email }}</p>
-    <p>Phone:{{ user.phone }}</p>
-    <button (click)="editUser(currentUser)" class="edit-User">
-      Редактировать
-    </button>
-    <button (click)="deleteUser(currentUser)" class="delete-User">
-      Удалить
-    </button>
+    <p>Phone:{{user.phone }}</p>
+    <div class="options-container">
+      <button (click)="editUser()" class="edit-User">Редактировать</button>
+      <button (click)="deleteUser()" class="delete-User">Удалить</button>
+    </div>
   </div>
 </div>

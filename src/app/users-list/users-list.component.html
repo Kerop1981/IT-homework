@@ -1,6 +1,6 @@
 <button mat-raised-button (click)="openDialog()">Добавить пользователя</button>
-<div *ngIf="user">
-  <div *ngFor="let currentUser of user">
-    <app-user-card [user]="currentUser" class="app-user-card"></app-user-card>
+<div *ngIf="users && users.length > 0">
+  <div *ngFor="let currentUser of users">
+    <app-user-card [user]="currentUser" (editUserClick)="editUser($event)" (deleteUserClick)="deleteUser($event)" class="app-user-card"></app-user-card>
   </div>
 </div>

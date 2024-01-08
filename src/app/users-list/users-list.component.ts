@@ -17,46 +17,60 @@ import { MatButtonModule } from '@angular/material/button';
   providers: [UsersApiService],
 })
 export class UsersListComponent implements OnInit {
-  user: User[];
+  users: User[] ;
 
   constructor(
+    private UsersApiService: UsersApiService,
     private LocalStorageUserService: LocalStorageUserService,
     private dialog: MatDialog,
   ) {}
 
-  ngOnInit(): void {
-    const storedUsers: User[] = this.LocalStorageUserService.getItem();
-    if (storedUsers && storedUsers.length > 0) {
-      this.user = storedUsers;
-    } else {
-      this.getUsers();
-    }
-  }
-
-  getUsers() {
-    this.LocalStorageUserService.users$.subscribe((data) => {
-      this.user = data;
-    });
-    const data: User[] = this.LocalStorageUserService.getItem();
-    if (data) {
-      this.user = data;
-    } else {
-      this.LocalStorageUserService.users$.subscribe(
-        (data: User[]) => (this.user = data),
-      );
-    }
-  }
 
 
   openDialog() {
     const dialogRef = this.dialog.open(DialogComponent, { width: '300px' });
     dialogRef.afterClosed().subscribe((result: User | string) => {
       if (result && typeof result === 'object' && !Array.isArray(result)) {
-        result.id = this.user.length + 1;
-        this.user.push(result);
-        this.LocalStorageUserService.setItem('user', this.user);
+        this.users.push(result);
+        this.LocalStorageUserService.setItem('users', this.users);
       }
     });
   }
 
+  editUser(userEdit: User) {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '300px',
+      data: { user: { ...userEdit }, isEdit: true },
+    });
+
+    dialogRef.afterClosed().subscribe((result: User | string) => {
+      if (result && typeof result === 'object' && !Array.isArray(result)) {
+        Object.assign(userEdit, result);
+        this.LocalStorageUserService.setItem('users', this.users);
+      }
+    });
+  }
+
+  loadUsers() {
+    this.users = this.LocalStorageUserService.getItem() || [];
+    if (this.users.length === 0) {
+      this.UsersApiService.getUsers().subscribe((value) => {
+        this.users = value.map(user => ({ ...user }));
+        this.LocalStorageUserService.setItem('users', this.users);
+      });
+    }
+  }
+
+  ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  deleteUser(userDelete: User): void {
+    const index = this.users.findIndex((user) => user.id === userDelete.id);
+
+    if (index !== -1) {
+      this.users.splice(index, 1);
+      this.LocalStorageUserService.setItem('users', this.users);
+    }
+  }
 }
