@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { UsersApiService } from '../services/users-api.service';
-import { UserCardComponent } from '../user-card/user-card.component';
-import { User } from '../models/User';
-import { CommonModule } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../dialog/dialog.component';
-import { LocalStorageUserService } from '../services/local-storage-user.service';
-import { MatButtonModule } from '@angular/material/button';
+import {Component, OnInit} from '@angular/core';
+import {UsersApiService} from '../services/users-api.service';
+import {UserCardComponent} from '../user-card/user-card.component';
+import {User} from '../models/User';
+import {CommonModule} from '@angular/common';
+import {MatDialog} from '@angular/material/dialog';
+import {DialogComponent} from '../dialog/dialog.component';
+import {LocalStorageUserService} from '../services/local-storage-user.service';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-users-list',
@@ -17,22 +17,26 @@ import { MatButtonModule } from '@angular/material/button';
   providers: [UsersApiService],
 })
 export class UsersListComponent implements OnInit {
-  users: User[] ;
+  users: User[];
 
   constructor(
     private UsersApiService: UsersApiService,
     private LocalStorageUserService: LocalStorageUserService,
     private dialog: MatDialog,
-  ) {}
-
+  ) {
+  }
 
 
   openDialog() {
-    const dialogRef = this.dialog.open(DialogComponent, { width: '300px' });
-    dialogRef.afterClosed().subscribe((result: User | string) => {
-      if (result && typeof result === 'object' && !Array.isArray(result)) {
-        this.users.push(result);
-        this.LocalStorageUserService.setItem('users', this.users);
+    const dialogRef = this.dialog.open(DialogComponent,
+      {
+        width: '300px',
+        data: {id: this.users.length + 1}
+      },
+    );
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.users = this.LocalStorageUserService.getItem();
       }
     });
   }
@@ -40,15 +44,11 @@ export class UsersListComponent implements OnInit {
   editUser(userEdit: User) {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '300px',
-      data: { user: { ...userEdit }, isEdit: true },
+      data: {user: {...userEdit}, isEdit: true},
     });
-
-    dialogRef.afterClosed().subscribe((result: User | string) => {
-      console.log(result)
-      console.log(userEdit)
-      if (result && typeof result === 'object' && !Array.isArray(result)) {
-        Object.assign(userEdit, result);
-        this.LocalStorageUserService.setItem('users', this.users);
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.users = this.LocalStorageUserService.getItem();
       }
     });
   }
@@ -57,7 +57,7 @@ export class UsersListComponent implements OnInit {
     this.users = this.LocalStorageUserService.getItem() || [];
     if (this.users.length === 0) {
       this.UsersApiService.getUsers().subscribe((value) => {
-        this.users = value.map(user => ({ ...user }));
+        this.users = value.map(user => ({...user}));
         this.LocalStorageUserService.setItem('users', this.users);
       });
     }

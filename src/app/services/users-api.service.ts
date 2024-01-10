@@ -16,12 +16,4 @@ export class UsersApiService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.url);
   }
-
-  updateUser(user:User):Observable<User> {
-    return this.http.put<User>(this.url + user.id, user)
-  }
-
-  createUser(user:User):Observable<User>{
-    return this.http.post<User>(this.url,user)
-  }
 }
