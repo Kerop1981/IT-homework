@@ -26,9 +26,4 @@ export class LocalStorageUserService {
     localStorage.setItem(key, JSON.stringify(data));
   }
 
-  removeItem(): boolean {
-    localStorage.removeItem('user');
-    return true;
-  }
-
 }

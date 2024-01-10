@@ -1,5 +1,11 @@
-import { Component } from '@angular/core';
-import {MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle} from '@angular/material/dialog';
+import {Component, Inject} from '@angular/core';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogActions,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle
+} from '@angular/material/dialog';
 import { User } from '../models/User';
 import { UsersApiService } from '../services/users-api.service';
 import {MatInputModule} from "@angular/material/input";
@@ -21,20 +27,34 @@ import {MatButtonModule} from "@angular/material/button"; // Импортиру�
   styleUrls: ['./dialog.component.scss'],
 })
 export class DialogComponent {
-  newUser: User = { id: 0, name: '', email: '', phone: '' };
+  newUser: any = {  name: '', email: '', phone: '' };
 
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
     private usersApiService: UsersApiService,
-  ) {}
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    console.log(data)
+    if(data?.user){
+      this.newUser = data.user
+    }
+  }
 
   onCancelClick(): void {
     this.dialogRef.close();
   }
 
   onCreateClick(): void {
-    this.usersApiService.createUser(this.newUser).subscribe((createdUser) => {
-      this.dialogRef.close(createdUser);
+    if(this.newUser?.id){
+      this.usersApiService.updateUser(this.newUser).subscribe((updateUser) => {
+        this.dialogRef.close(updateUser);
+    });
+      return
+    }
+    this.usersApiService.createUser(this.newUser).subscribe((createUser) => {
+      console.log(createUser)
+      this.dialogRef.close(createUser);
     });
   }
+
 }

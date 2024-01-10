@@ -7,7 +7,7 @@ import { User } from '../models/User';
   providedIn: 'root',
 })
 export class UsersApiService {
-  private url = 'https://jsonplaceholder.typicode.com/users';
+  private url = 'https://jsonplaceholder.typicode.com/users/';
 
   constructor(
     private http: HttpClient,
@@ -17,7 +17,11 @@ export class UsersApiService {
     return this.http.get<User[]>(this.url);
   }
 
-  createUser(user:User):Observable<User> {
-    return this.http.post<User>(this.url, user)
+  updateUser(user:User):Observable<User> {
+    return this.http.put<User>(this.url + user.id, user)
+  }
+
+  createUser(user:User):Observable<User>{
+    return this.http.post<User>(this.url,user)
   }
 }

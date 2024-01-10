@@ -44,6 +44,8 @@ export class UsersListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: User | string) => {
+      console.log(result)
+      console.log(userEdit)
       if (result && typeof result === 'object' && !Array.isArray(result)) {
         Object.assign(userEdit, result);
         this.LocalStorageUserService.setItem('users', this.users);
