@@ -6,11 +6,10 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import { User } from '../models/User';
-import { UsersApiService } from '../services/users-api.service';
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
-import {MatButtonModule} from "@angular/material/button"; // Импортируйте ваш сервис
+import {MatButtonModule} from "@angular/material/button";
+import {LocalStorageUserService} from "../services/local-storage-user.service"; // Импортируйте ваш сервис
 
 @Component({
   selector: 'app-dialog',
@@ -31,10 +30,9 @@ export class DialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
-    private usersApiService: UsersApiService,
+    private localStorageUserService: LocalStorageUserService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    console.log(data)
     if(data?.user){
       this.newUser = data.user
     }
@@ -46,15 +44,12 @@ export class DialogComponent {
 
   onCreateClick(): void {
     if(this.newUser?.id){
-      this.usersApiService.updateUser(this.newUser).subscribe((updateUser) => {
-        this.dialogRef.close(updateUser);
-    });
+      this.localStorageUserService.updateUser(this.newUser);
+      this.dialogRef.close(true);
       return
     }
-    this.usersApiService.createUser(this.newUser).subscribe((createUser) => {
-      console.log(createUser)
-      this.dialogRef.close(createUser);
-    });
+    this.localStorageUserService.createUser({...this.newUser, id: this.data.id});
+    this.dialogRef.close(true);
   }
 
 }

@@ -14,7 +14,7 @@ export class LocalStorageUserService {
   constructor() {}
 
   getItem(): any {
-    const data = localStorage.getItem('user');
+    const data = localStorage.getItem('users');
     if (data) {
       return JSON.parse(data);
     } else {
@@ -26,4 +26,15 @@ export class LocalStorageUserService {
     localStorage.setItem(key, JSON.stringify(data));
   }
 
+  public createUser(user: User): void {
+    const users = this.getItem();
+    const updatedUsers = [...users, user];
+    localStorage.setItem('users', JSON.stringify(updatedUsers));
+  }
+
+  public updateUser(user: User): void {
+    const users = this.getItem();
+    const updatedUsers = users.map((u: any) => u.id !== user.id ? u : user);
+    localStorage.setItem('users', JSON.stringify(updatedUsers));
+  }
 }
