@@ -23,15 +23,17 @@ export class UsersListComponent implements OnInit {
     private UsersApiService: UsersApiService,
     private LocalStorageUserService: LocalStorageUserService,
     private dialog: MatDialog,
-  ) {
-  }
+  ) {}
 
+  ngOnInit(): void {
+    this.loadUsers();
+  }
 
   openDialog() {
     const dialogRef = this.dialog.open(DialogComponent,
       {
         width: '300px',
-        data: {id: this.users.length + 1}
+        data: {id: Date.now()}
       },
     );
     dialogRef.afterClosed().subscribe((result: boolean) => {
@@ -53,18 +55,13 @@ export class UsersListComponent implements OnInit {
     });
   }
 
-  loadUsers() {
+  loadUsers(): void {
     this.users = this.LocalStorageUserService.getItem() || [];
     if (this.users.length === 0) {
-      this.UsersApiService.getUsers().subscribe((value) => {
-        this.users = value.map(user => ({...user}));
-        this.LocalStorageUserService.setItem('users', this.users);
+      this.UsersApiService.getUsers().subscribe((users: User[]): void => {
+        this.users = users;
       });
     }
-  }
-
-  ngOnInit(): void {
-    this.loadUsers();
   }
 
   deleteUser(userDelete: User): void {
